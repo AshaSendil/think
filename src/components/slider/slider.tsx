@@ -1,10 +1,12 @@
+// Import necessary modules
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'; // Import useRouter for navigation
+import Link from 'next/link'; // Import Link for navigation
 
 const Sliders = ({ items }: any) => {
+  const router = useRouter();
   const [currentStartIndex, setCurrentStartIndex] = useState(0);
   const imagesPerPage = 4;
-  const router = useRouter(); // Initialize useRouter
 
   const nextImages = () => {
     setCurrentStartIndex((prevStartIndex) =>
@@ -37,13 +39,15 @@ const Sliders = ({ items }: any) => {
       </button>
       <div className="slider-item flex gap-2">
         {items.slice(currentStartIndex, currentStartIndex + imagesPerPage).map((item: any, index: any) => (
-          <a key={index} href={item.href} onClick={(e) => { e.preventDefault(); handleImageClick(item.href); }}>
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-1/4 h-auto rounded-lg cursor-pointer"
-            />
-          </a>
+          <Link href={item.href} key={index}>
+            <>
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-1/4 h-auto rounded-lg cursor-pointer"
+              />
+            </>
+          </Link>
         ))}
       </div>
       <button
